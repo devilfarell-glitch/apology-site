@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Прости меня</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px;
+      max-width: 700px;
+      width: 90%;
+    }
+
+    .heart {
+      font-size: 80px;
+      margin-bottom: 30px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+      70% { transform: scale(1); }
+    }
+
+    .apology-text {
+      color: #e8e8e8;
+      font-size: 22px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .apology-text .highlight {
+      color: #f0a500;
+      font-style: italic;
+    }
+
+    .apology-text .emphasize {
+      color: #e94560;
+      font-weight: bold;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 16px 50px;
+      font-size: 22px;
+      font-family: 'Georgia', serif;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      position: relative;
+      user-select: none;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #e94560, #c23152);
+      color: white;
+      box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 35px rgba(233, 69, 96, 0.6);
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #2d2d44, #1e1e32);
+      color: #888;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      cursor: default;
+    }
+
+    .btn-no:hover {
+      transform: none;
+    }
+
+    .gratitude {
+      display: none;
+    }
+
+    .gratitude.show {
+      display: block;
+    }
+
+    .gratitude h1 {
+      color: #f0a500;
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .gratitude p {
+      color: #e8e8e8;
+      font-size: 24px;
+      line-height: 1.6;
+    }
+
+    .gratitude .heart-big {
+      font-size: 100px;
+      display: block;
+      margin-bottom: 20px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    .apology-section {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .apology-section.hidden {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .container > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 480px) {
+      .apology-text { font-size: 18px; }
+      .btn { padding: 14px 35px; font-size: 18px; }
+      .buttons { gap: 20px; }
+      .gratitude h1 { font-size: 32px; }
+      .gratitude p { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <div class="apology-section" id="apologySection">
+      <div class="heart">❤️</div>
+      <div class="apology-text">
+        <p>
+          Прости меня, пожалуйста, <span class="highlight">родная</span>...<br><br>
+          Я сказал те слова не подумав, и теперь мне <span class="emphasize">так стыдно</span>.<br>
+          Мои слова были <span class="emphasize">грубыми и несправедливыми</span>,<br>
+          я не имел права так говорить с тобой.<br><br>
+          Ты — самое <span class="highlight">дорогое</span>, что есть в моей жизни,<br>
+          и я <span class="emphasize">умоляю</span> тебя простить меня.<br><br>
+          <span class="highlight">Обещаю</span>, я больше никогда не повторю этой ошибки.<br>
+          Ты заслуживаешь только <span class="emphasize">любви и уважения</span>.<br><br>
+          <span style="font-size: 26px; color: #f0a500;">Простишь меня?</span>
+        </p>
+      </div>
+      <div class="buttons">
+        <button class="btn btn-yes" id="btnYes">Да ❤️</button>
+        <button class="btn btn-no" id="btnNo">Нет</button>
+      </div>
+    </div>
+
+    <div class="gratitude" id="gratitude">
+      <span class="heart-big">💖</span>
+      <h1>Спасибо, любимая!</h1>
+      <p>
+        Твоё прощение — лучшее, что могло случиться.<br>
+        Я бесконечно благодарен тебе за этот шанс.<br>
+        <span style="color: #f0a500; font-size: 28px;">Я тебя очень сильно люблю ❤️</span>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function createStars() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+        star.style.animationDelay = Math.random() * 4 + 's';
+        star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
+        container.appendChild(star);
+      }
+    }
+    createStars();
+
+    const btnNo = document.getElementById('btnNo');
+    const btnYes = document.getElementById('btnYes');
+    const apologySection = document.getElementById('apologySection');
+    const gratitude = document.getElementById('gratitude');
+
+    btnYes.addEventListener('click', () => {
+      apologySection.classList.add('hidden');
+      gratitude.classList.add('show');
+    });
+
+    function getDistance(element, mouseX, mouseY) {
+      const rect = element.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      return Math.sqrt((mouseX - centerX) ** 2 + (mouseY - centerY) ** 2);
+    }
+
+    function isNearButton(element, mouseX, mouseY, threshold) {
+      return getDistance(element, mouseX, mouseY) < threshold;
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      const threshold = 150;
+
+      if (isNearButton(btnNo, e.clientX, e.clientY, threshold)) {
+        const rect = btnNo.getBoundingClientRect();
+        const btnCenterX = rect.left + rect.width / 2;
+        const btnCenterY = rect.top + rect.height / 2;
+
+        const force = 250;
+        const dx = btnCenterX - e.clientX;
+        const dy = btnCenterY - e.clientY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > 0) {
+          const moveX = (dx / dist) * force;
+          const moveY = (dy / dist) * force;
+
+          const currentX = parseFloat(btnNo.dataset.x || 0);
+          const currentY = parseFloat(btnNo.dataset.y || 0);
+
+          const newX = Math.max(-300, Math.min(300, moveX));
+          const newY = Math.max(-300, Math.min(300, moveY));
+
+          btnNo.style.transform = `translate(${newX}px, ${newY}px)`;
+          btnNo.dataset.x = newX;
+          btnNo.dataset.y = newY;
+        }
+      }
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const threshold = 180;
+
+      if (isNearButton(btnNo, touch.clientX, touch.clientY, threshold)) {
+        const rect = btnNo.getBoundingClientRect();
+        const btnCenterX = rect.left + rect.width / 2;
+        const btnCenterY = rect.top + rect.height / 2;
+
+        const force = 250;
+        const dx = btnCenterX - touch.clientX;
+        const dy = btnCenterY - touch.clientY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > 0) {
+          const moveX = (dx / dist) * force;
+          const moveY = (dy / dist) * force;
+
+          const newX = Math.max(-300, Math.min(300, moveX));
+          const newY = Math.max(-300, Math.min(300, moveY));
+
+          btnNo.style.transform = `translate(${newX}px, ${newY}px)`;
+        }
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
